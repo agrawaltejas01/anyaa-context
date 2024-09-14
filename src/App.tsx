@@ -9,11 +9,12 @@ import Loader from "./components/Loader";
 
 import { agentMap } from "./lib/agents";
 
-const USER_NUMBER = "08554887572";
+const USER_NUMBER = "8554887572";
 
 function buildUserDetailsTable(userCallingData: IUserCalling[]) {
-  let dataSource = userCallingData.map((userCalling) => {
+  let dataSource = userCallingData.map((userCalling, ind) => {
     return {
+      key: ind,
       name: userCalling.userDetails?.name,
       phone: userCalling.userNumber,
       persona: userCalling.userDetails?.personaAssigned,
@@ -121,7 +122,7 @@ function App() {
           );
         }}
       />
-      <p>{message}</p>
+      {message}
     </div>
   );
 }
