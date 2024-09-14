@@ -4,10 +4,54 @@ import "./App.css";
 import wsService from "./socket";
 import { IUserCalling } from "./types/user.calling.types";
 
-import { Flex, Switch } from "antd";
+import { Flex, Switch, Table } from "antd";
 import Loader from "./components/Loader";
 
+import { agentMap } from "./lib/agents";
+
 const USER_NUMBER = "08554887572";
+
+function buildUserDetailsTable(userCallingData: IUserCalling[]) {
+  let dataSource = userCallingData.map((userCalling) => {
+    return {
+      name: userCalling.userDetails?.name,
+      phone: userCalling.userNumber,
+      persona: userCalling.userDetails?.personaAssigned,
+      agent: agentMap.get(userCalling.agentNumber)?.name || "Unknown",
+      callTime: userCalling.timeStamp,
+    };
+  });
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "User Persona",
+      dataIndex: "persona",
+      key: "persona",
+    },
+    {
+      title: "Agent",
+      dataIndex: "agent",
+      key: "agent",
+    },
+    {
+      title: "Time of call",
+      dataIndex: "callTime",
+      key: "callTime",
+    },
+  ];
+
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+}
 
 function createComponentOutOfUserCallingData(
   userCallingData: IUserCalling[],
@@ -28,15 +72,7 @@ function createComponentOutOfUserCallingData(
 
   return (
     <Flex flex={1} vertical gap={10} style={{ color: "white" }}>
-      {userCallingData.map((userCalling) => {
-        return (
-          <Flex flex={1} gap={10}>
-            <span> User - {userCalling.userNumber} </span>
-            <span> Time - {userCalling.timeStamp} </span>
-            <span> Agent - {userCalling.agentNumber} </span>
-          </Flex>
-        );
-      })}
+      {buildUserDetailsTable(userCallingData)}
     </Flex>
   );
 }
