@@ -4,7 +4,7 @@ import "./App.css";
 import wsService from "./socket";
 import { IUserCalling } from "./types/user.calling.types";
 
-import { Flex, Switch, Table } from "antd";
+import { Flex, Table } from "antd";
 import Loader from "./components/Loader";
 
 import { agentMap } from "./lib/agents";
