@@ -102,7 +102,7 @@ function App() {
 
   useEffect(() => {
     if (userCallingData && userCallingData.length) {
-      setMessage(createComponentOutOfUserCallingData(userCallingData, true));
+      setMessage(createComponentOutOfUserCallingData(userCallingData, false));
     }
   }, [userCallingData]);
 
@@ -110,21 +110,7 @@ function App() {
     return <Loader />;
   }
 
-  return (
-    <div className="App">
-      <Switch
-        checkedChildren="Show mine"
-        unCheckedChildren="Show all"
-        defaultChecked
-        onChange={(checked) => {
-          setMessage(
-            createComponentOutOfUserCallingData(userCallingData, checked)
-          );
-        }}
-      />
-      {message}
-    </div>
-  );
+  return <div className="App">{message}</div>;
 }
 
 export default App;
